@@ -1,0 +1,7 @@
+button{
+    height:fit-content;
+}
+button:hover{
+    color: white;
+    background-color: #374e70;
+}
