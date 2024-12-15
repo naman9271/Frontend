@@ -5,7 +5,7 @@ export default function Counter(){
         e.stopPropagation();
         console.log(`inside function${number}`);
         setTimeout(() => {
-            setNumber(number=>number+1);
+            setNumber(number =>number+1);
         }, 2000);
     }
     return(

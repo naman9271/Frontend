@@ -1,7 +1,10 @@
 import { useState } from "react"
 import { useEffect } from "react"
 import "./addVideo.css"
-function AddVideo({addVideos, editableVideo,updateVideo}){
+//import VideosDispatchContext from "../context/videosDispatchContext"
+import useVideosDispatch from "../hooks/VideoDispatch"
+function AddVideo({editableVideo}){
+    const dispatch = useVideosDispatch();
     const initialState={
         channel:"coder dost",
         time :"3 year ago",
@@ -16,9 +19,9 @@ function AddVideo({addVideos, editableVideo,updateVideo}){
         e.preventDefault();
         e.stopPropagation();
         if(editableVideo){
-            updateVideo(videos)
+            dispatch({type:"Update",payload:videos});
         }else{
-            addVideos(videos);
+            dispatch({type:"Add",payload:videos})
         }
         setVideos(initialState);
     }

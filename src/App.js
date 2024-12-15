@@ -1,8 +1,12 @@
 import "./App.css";
-import videoDB from "./data/data"
-import { useReducer, useState } from "react";
+import videoDB from "./data/data";
+import {useContext,useReducer, useState } from "react";
 import VideoList from "./components/VideoList";
-import AddVideo from "./components/addVideo"
+import AddVideo from "./components/addVideo";
+import Theme from "./context/context";
+import VideosContext from "./context/videosContext";
+import VideosDispatchContext from "./context/videosDispatchContext";
+import Counter from "./components/counter";
 
 function App(){
   // const [videos,setVideos] = useState(videoDB);
@@ -27,32 +31,41 @@ function App(){
     }
   }
 
-  function addVideos(video){
-    dispatch({type:"Add",payload:video})
-      // setVideos([...videos,{...video, id :videos.length+1}])
-  }
-  function deleteVideos(id,e){
-    e.stopPropagation();
-    dispatch({type:"Delete",payload:id})
-    // setVideos(videos.filter(video=>video.id!==id));
-  }
+
+  const theme = useContext(Theme);
+  console.log(theme);
+
+  // function addVideos(video){
+  //   dispatch({type:"Add",payload:video})
+  //     // setVideos([...videos,{...video, id :videos.length+1}])
+  // }
+  // function deleteVideos(id,e){
+  //   e.stopPropagation();
+  //   dispatch({type:"Delete",payload:id})
+  //   // setVideos(videos.filter(video=>video.id!==id));
+  // }
   function editVideos(id,e){
     e.stopPropagation();
     setEditableVideo(videos.find(video=>id===video.id));
   }
-  function updateVideo(video){
-    dispatch({type:"Update",payload:video})
-    // const index = videos.findIndex(v=>v.id ===video.id);
-    // const newVideos=[...videos];
-    // newVideos.splice(index,1,video);
-    // setVideos(newVideos);
-  }
+  // function updateVideo(video){
+  //   dispatch({type:"Update",payload:video})
+  //   // const index = videos.findIndex(v=>v.id ===video.id);
+  //   // const newVideos=[...videos];
+  //   // newVideos.splice(index,1,video);
+  //   // setVideos(newVideos);
+  // }
 
   return (
+    <VideosContext.Provider value={videos}>
+      <VideosDispatchContext.Provider value ={dispatch}>
     <div className="App" onClick ={()=>console.log("App")}>
-      <AddVideo addVideos={addVideos} editableVideo={editableVideo} updateVideo={updateVideo}></AddVideo>
-      <VideoList videos = {videos} deleteVideos={deleteVideos} editVideos={editVideos}></VideoList>
-    </div>
+      <Counter></Counter>
+      <AddVideo editableVideo={editableVideo}></AddVideo>
+      <VideoList editVideos={editVideos}></VideoList>
+    </div>  
+    </VideosDispatchContext.Provider>
+    </VideosContext.Provider>
   )}
 
 

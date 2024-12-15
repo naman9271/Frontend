@@ -1,7 +1,9 @@
 import Video from "./video";
 import PlayButton from "./play";
-function VideoList({videos,deleteVideos ,editVideos}){
-    
+import { useContext } from "react";
+import VideoContext from "../context/videosContext";
+function VideoList({editVideos}){
+    const videos = useContext(VideoContext);
     return(
         <>
         {videos.map((video)=>(
@@ -13,7 +15,6 @@ function VideoList({videos,deleteVideos ,editVideos}){
             views = {video.views}
             time = {video.time}
             verified = {video.verified}
-            deleteVideos={deleteVideos}
             editVideos={editVideos}
           >
             <PlayButton onPlay={()=>console.log(`playing.. ${video.title}`)} onPause={()=>console.log(`paused... ${video.title}`)}>{video.title}</PlayButton>
